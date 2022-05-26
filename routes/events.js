@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const eventController = require('../controllers/event.controller.js');
-const atttendeeController = require('../controllers/event.controller.js');
+const atttendeeController = require('../controllers/attendees.controller.js');
 const passport = require('passport');
 
 /* GET users listing. */
