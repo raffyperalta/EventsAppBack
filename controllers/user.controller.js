@@ -76,9 +76,22 @@ const login = async(req,res) =>{
 }
 
 
-
+const getAttendedEvents = async(req,res) =>{
+  try{
+    const userId = req.params.id;
+    const data = await models.sequelize.query(
+      `SELECT * FROM events 
+      INNER JOIN attendees ON events.id = attendees.eventId
+      INNER JOIN users ON attendees.attendeeId = users.id
+      WHERE users.id = ${userId} `
+    );
+    res.json(data[0]);
+  }catch(err){
+    console.log(err)
+  }
+}
 
 
 module.exports = {
-  register, login, getUsers, getOneUser
+  register, login, getUsers, getOneUser, getAttendedEvents
 }

@@ -57,6 +57,22 @@ const getEvents = async(req,res) =>{
   }
 }
 
+const getAttendees = async(req,res) =>{
+  try{
+    const eventId = req.params.id;
+    const data = await models.sequelize.query(
+      `SELECT users.id ,users.name, users.email FROM users 
+      INNER JOIN attendees ON users.id = attendees.attendeeId
+      INNER JOIN events ON attendees.eventId = events.id
+      WHERE events.id = ${eventId} `
+    );
+    console.log(data)
+    res.json(data[0]);
+  }catch(err){
+    console.log(err)
+  }
+}
+
 const deleteEvent = async(req,res) =>{
   const userId = req.params.id;
   try{
@@ -74,5 +90,5 @@ const deleteEvent = async(req,res) =>{
 
 
 module.exports = {
-  createEvent, getEvents,updateEvent, deleteEvent, getSpecificEvents
+  createEvent, getEvents,updateEvent, deleteEvent, getSpecificEvents, getAttendees
 }

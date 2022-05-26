@@ -13,6 +13,8 @@ router.get('/', eventController.getEvents)
 
 router.get('/:id', eventController.getSpecificEvents)
 
+router.get('/event/:id', eventController.getAttendees)
+
 router.put('/update/:id', eventController.updateEvent)
 
 router.post('/create', eventController.createEvent)

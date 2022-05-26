@@ -17,4 +17,8 @@ router.get('/user', passport.authenticate('jwt',{session:false}), userController
 
 router.post('/register', userController.register)
 
+router.get('/events', userController.register)
+
+router.get('/attend/:id', userController.getAttendedEvents)
+
 module.exports = router;
