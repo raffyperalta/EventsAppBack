@@ -4,12 +4,12 @@ const userController = require('../controllers/user.controller.js');
 const passport = require('passport');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  userController.getUser()
-});
+// router.get('/', function(req, res, next) {
+//   userController.getUsers()
+// });
 
 
-router.get('/users', userController.getUser)
+// router.get('/users', userController.getUsers)
 
 router.post('/login', userController.login)
 

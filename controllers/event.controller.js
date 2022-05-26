@@ -1,7 +1,5 @@
 const models = require ('../models');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const passport = require('passport');
+
 
 const Events = models.Events
 
@@ -12,7 +10,9 @@ const createEvent = async(req,res) =>{
       data
     );
     res.status(201);
-    res.json("Create Successful");
+    res.json({
+      'message': 'Create Successful'
+    });
 
   }catch(err){
     console.log(err)
@@ -27,7 +27,9 @@ const updateEvent = async(req,res) =>{
     await Events.update(data, { where: {id : userId}})
     console.log()
     res.status(201);
-    res.json("Update Successful");
+    res.json({
+      'message': 'Update Successful'
+    });
 
   }catch(err){
     console.log(err)
@@ -57,11 +59,12 @@ const getEvents = async(req,res) =>{
 
 const deleteEvent = async(req,res) =>{
   const userId = req.params.id;
-
   try{
     Events.destroy({ where: {id: userId}})
     res.status(201);
-    res.json("Delete Successful");
+    res.json({
+      'message': 'Delete Successful'
+    });
 
   }catch(err){
     console.log(err)

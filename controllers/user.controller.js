@@ -17,17 +17,21 @@ const register = async(req,res) =>{
       data
     );
     res.status(201);
-    res.json("Registration Successful");
+    res.json({
+      'message': 'Registration Successful'
+    });
 
   }catch(err){
     console.log(err)
   }
 }
 
-const getUser = async (req,res) => {
-  const users = await User.findAll();
-  const json = {
-    'users': user
+const getUsers = async (req,res) => {
+  try{
+    const data = await User.findAll();
+    res.json(data);
+  }catch(err){
+    console.log(err)
   }
 }
 
@@ -44,24 +48,30 @@ const login = async(req,res) =>{
   const email = req.body.email;
   const password = req.body.password;
   
-  const user = await User.findOne({
-    where:{ email : email }
-  });
-  console.log("this is user: " +user)
-  const checkPassword = bcrypt.compare(req.body.password, user.password);
-  if(!checkPassword){
-    return res.json("password incorrect");
-  }else{
-    const payload = {
-      id:user.id,
-    }
-    const token = jwt.sign(payload, 'myVerySecret');
-    res.json({
-      'token' : token,
-      'msg' : 'login successful',
-      'user' : user,
-      'statusCode' : 200
+  try{
+    const user = await User.findOne({
+      where:{ email : email }
     });
+    console.log("this is user: " +user)
+    const checkPassword = bcrypt.compare(password, user.password);
+    if(!checkPassword){
+      return res.json("password incorrect");
+    }else{
+      const payload = {
+        id:user.id,
+      }
+      const token = jwt.sign(payload, 'myVerySecret');
+      res.json({
+        'token' : token,
+        'msg' : 'login successful',
+        'user' : user,
+        'statusCode' : 200
+      });
+    }
+  }catch(err){
+    res.json({
+      'message': 'Wrong email or password'
+    })
   }
 }
 
@@ -70,5 +80,5 @@ const login = async(req,res) =>{
 
 
 module.exports = {
-  register, login, getUser, getOneUser
+  register, login, getUsers, getOneUser
 }
