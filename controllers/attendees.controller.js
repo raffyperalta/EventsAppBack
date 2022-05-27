@@ -10,10 +10,13 @@ const addAttendee = async(req,res) =>{
     );
     res.status(201);
     res.json({
-      'message': 'Added Successful'
+      'statusCode' : 201,
+      'message': 'Added Successful',
+      'body': data
     });
 
   }catch(err){
+    res.status(400);
     console.log(err)
   }
 }
